@@ -1,0 +1,27 @@
+@import "tailwindcss";
+/* index.css — brand scaffold */
+
+/* 1) Theme tokens */
+:root {
+  --brand-deep-blue: #1d2938;            /* Deep Blue */
+  --brand-deep-blue-ink: #141c27;        /* Darker ink for contrast */
+  --brand-deep-blue-tint: #314155;       /* Lighter tint for borders/hover */
+  --font-sans: 'Balgin', 'Balgin Extra Light', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    
+}
+
+/* 2) Font loading (Balgin Extra Light) */
+@font-face {
+  font-family: 'Balgin';
+  src:
+   
+    url('/fonts/balgin-extra-light.ttf') format('truetype');
+  
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+
