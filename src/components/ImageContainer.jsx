@@ -7,8 +7,8 @@ const LERP_FACTOR = 0.1;
 export const ImageContainer = ({ baseImage, revealImage }) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [showReveal, setShowReveal] = useState(false); // For touch toggle
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [showReveal, setShowReveal] = useState(false);
   
   const containerRef = useRef(null);
   const topImageRef = useRef(null);
@@ -26,15 +26,27 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
   
   const animationFrameId = useRef(null);
 
-  // Detect touch device
+  // Detect mobile/tablet based on screen size
   useEffect(() => {
-    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    setIsTouchDevice(hasTouch);
+    const checkScreenSize = () => {
+      // Mobile and tablets are typically <= 1024px
+      setIsMobileOrTablet(window.innerWidth <= 1024);
+    };
+
+    // Check on mount
+    checkScreenSize();
+
+    // Listen for window resize
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
   }, []);
 
-  // Desktop animation loop - ORIGINAL VERSION
+  // Desktop animation loop
   useEffect(() => {
-    if (isTouchDevice) return;
+    if (isMobileOrTablet) return;
 
     const animate = () => {
       if (isAnimating) {
@@ -91,11 +103,10 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
         animationFrameId.current = null;
       }
     };
-  }, [isHovering, isAnimating, isTouchDevice]);
+  }, [isHovering, isAnimating, isMobileOrTablet]);
 
-  // Desktop mouse move
   const handleMouseMove = (e) => {
-    if (containerRef.current && !isAnimating && !isTouchDevice) {
+    if (containerRef.current && !isAnimating && !isMobileOrTablet) {
       const rect = containerRef.current.getBoundingClientRect();
       mousePos.current = {
         x: e.clientX - rect.left,
@@ -104,11 +115,10 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
     }
   };
 
-  // Desktop click (expand animation)
   const handleClick = (e) => {
     e.stopPropagation();
     
-    if (isAnimating || isTouchDevice) return;
+    if (isAnimating || isMobileOrTablet) return;
 
     setIsAnimating(true);
 
@@ -158,14 +168,13 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
     });
   };
 
-  // Touch toggle button handler
   const handleToggle = (e) => {
     e.stopPropagation();
     setShowReveal(!showReveal);
   };
 
-  // Render for TOUCH devices
-  if (isTouchDevice) {
+  // Render for MOBILE/TABLET (screen width <= 1024px)
+  if (isMobileOrTablet) {
     return (
       <div className="image-container-wrapper absolute top-0 left-0 w-full h-full z-[2]">
         <img
@@ -214,7 +223,7 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
     );
   }
 
-  // Render for DESKTOP devices - ORIGINAL VERSION
+  // Render for DESKTOP/LAPTOP (screen width > 1024px)
   return (
     <div
       ref={containerRef}
