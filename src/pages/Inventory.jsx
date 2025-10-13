@@ -10,15 +10,15 @@ export default function Inventory() {
   // Map cls-* to highlight colors
   const getClassColor = useCallback((layer) => {
     const classColors = {
-      'cls-1': '#3b499f',
-      'cls-2': '#f2ea0a',
-      'cls-3': '#f5eb14',
+      'cls-1': 'rgba(139, 92, 246, 0.60)',
+      'cls-2': 'rgba(139, 92, 246, 0.60)',
+      'cls-3': 'rgba(139, 92, 246, 0.60)',
       'cls-4': '#f3ea0b',
       'cls-5': '#f7ec13',
       'cls-6': '#f4ea11',
-      'cls-7': '#fdb717',
+      'cls-7': 'rgba(16, 185, 129, 0.60)',
       'cls-8': '#3b4b9f',
-      'cls-9': '#3b4c9f',
+      'cls-9': 'rgba(135, 206, 235, 0.60)',
     };
     return classColors[layer.class] || '#d0aa2d';
   }, []);
@@ -79,7 +79,7 @@ export default function Inventory() {
         >
           {/* Background Image */}
           <image
-            href="/images/building.jpg"
+            href="/images/building.webp"
             x="0"
             y="0"
             width="6826"
