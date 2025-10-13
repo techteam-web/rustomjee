@@ -1,13 +1,74 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { data } from "../constants/data";
+
+// Modal Component
+const LayerModal = ({ layer, onClose }) => {
+  const modalRef = useRef(null);
+
+  // Close on click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [onClose]);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onClose]);
+
+  return (
+   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+  <div ref={modalRef} className="relative max-w-4xl w-full mx-4">
+    {/* Close Button - Positioned absolutely on top-right */}
+    <button 
+      onClick={onClose}
+      className="absolute -top-0 -right-0 z-10 bg-transparent hover:bg-gray-100 rounded-full p-2 shadow-lg transition-colors cursor-pointer"
+    >
+      <svg 
+        className="w-6 h-6 text-gray-700" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+          strokeWidth={2} 
+          d="M6 18L18 6M6 6l12 12" 
+        />
+      </svg>
+    </button>
+
+    {/* Image */}
+    <img 
+      src="/images/floorplan.jpeg" 
+      alt="Floor Plan"
+      className="w-full h-auto rounded-lg shadow-2xl"
+    />
+  </div>
+</div>
+
+  );
+};
 
 export default function Inventory() {
   const [layers] = useState(data);
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [hoveredLayer, setHoveredLayer] = useState(null);
+  const [modalLayer, setModalLayer] = useState(null); // New state for modal
   const svgRef = useRef(null);
 
-  // Map cls-* to highlight colors
   const getClassColor = useCallback((layer) => {
     const classColors = {
       'cls-1': 'rgba(139, 92, 246, 0.60)',
@@ -23,13 +84,11 @@ export default function Inventory() {
     return classColors[layer.class] || '#d0aa2d';
   }, []);
 
-  // Default neutral fill; highlight on hover/selection
   const getFill = useCallback((layer) => {
     const active = selectedLayer === layer.path_id || hoveredLayer === layer.path_id;
     return active ? getClassColor(layer) : "rgba(0, 0, 0, 0.1)";
   }, [selectedLayer, hoveredLayer, getClassColor]);
 
-  // Stronger when active
   const getOpacity = useCallback((layer) => {
     const active = selectedLayer === layer.path_id || hoveredLayer === layer.path_id;
     return active ? 0.9 : 1;
@@ -44,7 +103,15 @@ export default function Inventory() {
   }, []);
 
   const handleLayerClick = useCallback((layer) => {
+    // Check if layer has cls-1, cls-2, or cls-3
+    if (['cls-1', 'cls-2', 'cls-3'].includes(layer.class)) {
+      setModalLayer(layer); // Open modal
+    }
     setSelectedLayer(prev => prev === layer.path_id ? null : layer.path_id);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalLayer(null);
   }, []);
 
   return (
@@ -57,17 +124,6 @@ export default function Inventory() {
         />
       </div>
 
-      {/* {hoveredLayer && (
-        <div className="fixed top-4 left-4 z-40 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg">
-          <p className="text-sm font-semibold">
-            {layers.find(l => l.path_id === hoveredLayer)?.layer_id}
-          </p>
-          <p className="text-xs text-gray-600">
-            {hoveredLayer}
-          </p>
-        </div>
-      )} */}
-
       <div className="fixed inset-0 w-full h-full flex items-center justify-center">
         <svg
           ref={svgRef}
@@ -77,7 +133,6 @@ export default function Inventory() {
           preserveAspectRatio="xMidYMid slice"
           style={{ shapeRendering: 'optimizeSpeed', pointerEvents: 'auto' }}
         >
-          {/* Background Image */}
           <image
             href="/images/building.webp"
             x="0"
@@ -87,12 +142,7 @@ export default function Inventory() {
             preserveAspectRatio="xMidYMid slice"
           />
 
-          {/* KEEPING your g transform exactly */}
-          <g
-  style={{
-    transform: 'translate(2050px, -10px) scale(0.85) '
-  }}
->
+          <g style={{ transform: 'translate(2050px, -10px) scale(0.85)' }}>
             {layers.map((layer) => (
               <path
                 key={layer.path_id}
@@ -105,7 +155,6 @@ export default function Inventory() {
                 style={{
                   cursor: 'pointer',
                   transition: 'opacity 120ms ease-out, fill 120ms ease-out',
-                  outline: selectedLayer === layer.path_id ? 'none' : 'none',
                 }}
                 onMouseEnter={() => handleLayerMouseEnter(layer.path_id)}
                 onMouseLeave={handleLayerMouseLeave}
@@ -115,6 +164,9 @@ export default function Inventory() {
           </g>
         </svg>
       </div>
+
+      {/* Render Modal */}
+      {modalLayer && <LayerModal layer={modalLayer} onClose={closeModal} />}
     </div>
   );
 }
