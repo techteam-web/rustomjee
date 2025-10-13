@@ -71,15 +71,16 @@ export default function Inventory() {
 
   const getClassColor = useCallback((layer) => {
     const classColors = {
-      'cls-1': 'rgba(139, 92, 246, 0.60)',
-      'cls-2': 'rgba(139, 92, 246, 0.60)',
-      'cls-3': 'rgba(139, 92, 246, 0.60)',
+      'cls-1': 'rgba(29, 41, 56, 0.60)',
+      'cls-2': 'rgba(29, 41, 56, 0.60)',
+      'cls-3': 'rgba(29, 41, 56, 0.60)',
       'cls-4': '#f3ea0b',
       'cls-5': '#f7ec13',
       'cls-6': '#f4ea11',
-      'cls-7': 'rgba(16, 185, 129, 0.60)',
+      'cls-7': 'rgba(181, 209, 141, 0.60)',
       'cls-8': '#3b4b9f',
-      'cls-9': 'rgba(135, 206, 235, 0.60)',
+      'cls-9': 'rgba(204, 256, 252, 0.60)',
+      // R204 G256 B252
     };
     return classColors[layer.class] || '#d0aa2d';
   }, []);
