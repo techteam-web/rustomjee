@@ -18,9 +18,9 @@ const Home = () => {
         const logo = container.current?.querySelector('.logo img');
         const buildingName = container.current?.querySelector('.building-name');
         const taglines = container.current?.querySelectorAll('.tagline');
-        const gradient = container.current?.querySelector('.section-gradient');
+        
 
-        if (!buildingName || !taglines.length || !gradient) {
+        if (!buildingName || !taglines.length ) {
             return;
         }
 
@@ -42,42 +42,11 @@ const Home = () => {
         );
 
         // Gradient animation
-        gsap.fromTo(gradient,
-            { opacity: 1 },
-            {
-                opacity: 0,
-                scrollTrigger: {
-                    trigger: '.info-section',
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1,
-                }
-            }
-        );
+       
        // Fade out video section
-gsap.to('.hero-section', {
-    opacity: 0,
-    scrollTrigger: {
-        trigger: '.info-section',
-        start: 'top 80%',
-        end: 'top 20%',
-        scrub: 1
-    }
-});
 
 // Fade in white section
-gsap.fromTo('.info-section',
-    { opacity: 0 },
-    {
-        opacity: 1,
-        scrollTrigger: {
-            trigger: '.info-section',
-            start: 'top 80%',
-            end: 'top 20%',
-            scrub: 1
-        }
-    }
-);
+
 
 
 
@@ -141,27 +110,15 @@ gsap.fromTo('.info-section',
                         >
                             IT'S RUSTOMJEE
                         </p>
+
+                        <h1 className="text-4xl bottom-10 uppercase font-bold " style={{fontFamily:'Balgin, sans-serif'}}>Coming Soon</h1>
                     </div>
                     
                 </div>
              
             </section>
 
-            {/* Property Info Section */}
-            <section className="info-section relative bg-white min-h-screen">
-                {/* Gradient Overlay at Top */}
-                <div 
-                    className="section-gradient absolute top-0 left-0 w-full h-64 pointer-events-none z-10"
-                    style={{
-                        background: 'linear-gradient(to bottom, rgba(240, 212, 197,1) 0%, transparent 100%)'
-                    }}
-                />
-
-                {/* Content Goes Here */}
-                <div className="relative z-0">
-                    {/* Property info content will go here */}
-                </div>
-            </section>
+        
         </div>
     );
 };

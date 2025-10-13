@@ -57,7 +57,7 @@ export default function Inventory() {
         />
       </div>
 
-      {hoveredLayer && (
+      {/* {hoveredLayer && (
         <div className="fixed top-4 left-4 z-40 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg">
           <p className="text-sm font-semibold">
             {layers.find(l => l.path_id === hoveredLayer)?.layer_id}
@@ -66,31 +66,31 @@ export default function Inventory() {
             {hoveredLayer}
           </p>
         </div>
-      )}
+      )} */}
 
-      <div className="relative w-full h-full flex items-center justify-center">
+      <div className="fixed inset-0 w-full h-full flex items-center justify-center">
         <svg
           ref={svgRef}
-          viewBox="-689 -667 2799 4375"
+          viewBox="0 0 6826 3840"
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="xMidYMid slice"
           style={{ shapeRendering: 'optimizeSpeed', pointerEvents: 'auto' }}
         >
           {/* Background Image */}
           <image
             href="/images/building.jpg"
-            x="-689"
-            y="-667"
-            width="2799"
-            height="4375"
+            x="0"
+            y="0"
+            width="6826"
+            height="3840"
             preserveAspectRatio="xMidYMid slice"
           />
 
           {/* KEEPING your g transform exactly */}
           <g
   style={{
-    transform: 'translate(-850px, -710px) translate(710px, 0) scale(0.97, 1) translate(-710px, 0)'
+    transform: 'translate(2050px, -10px) scale(0.85) '
   }}
 >
             {layers.map((layer) => (
