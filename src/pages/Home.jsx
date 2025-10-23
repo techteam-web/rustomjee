@@ -11,6 +11,7 @@ const Home = () => {
     const container = useRef(null);
     const [scrollEnabled, setScrollEnabled] = useState(false);
     const [midSectionAnimComplete, setMidSectionAnimComplete] = useState(false);
+    const [currentSection, setCurrentSection] = useState(0);
 
     useGSAP(() => {
         if (videoRef.current) {
@@ -82,6 +83,43 @@ const Home = () => {
         );
 
     }, { scope: container });
+
+    // Prevent backward scrolling
+    useEffect(() => {
+        if (!scrollEnabled) return;
+
+        let lastScrollTop = 0;
+
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Detect scroll direction
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down - allow and update section
+                const windowHeight = window.innerHeight;
+                if (scrollTop > windowHeight * 0.5 && currentSection === 0) {
+                    setCurrentSection(1);
+                } else if (scrollTop > windowHeight * 1.5 && currentSection === 1) {
+                    setCurrentSection(2);
+                }
+            } else {
+                // Scrolling up - prevent by scrolling back to current section
+                if (currentSection === 1) {
+                    window.scrollTo(0, window.innerHeight);
+                } else if (currentSection === 2) {
+                    window.scrollTo(0, window.innerHeight * 2);
+                }
+            }
+            
+            lastScrollTop = scrollTop;
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [scrollEnabled, currentSection]);
 
     // Mid section animation - wait for DOM to be ready
     useEffect(() => {
@@ -205,6 +243,7 @@ const Home = () => {
                     muted 
                     playsInline 
                     className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+                    style={{ transform: 'scale(1.2)' }}
                 >
                     <source src="/video/5.mp4" type="video/mp4"/>
                 </video>
@@ -253,21 +292,6 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* Top half of overlay at bottom of hero section */}
-                {scrollEnabled && (
-                    <div className="absolute bottom-0 left-0 w-full pointer-events-none z-30" style={{ height: '30vh' }}>
-                        <img 
-                            src="/images/overlay.png" 
-                            alt="Overlay Top" 
-                            className="w-full h-full"
-                            style={{
-                                objectFit: 'cover',
-                                objectPosition: 'top'
-                            }}
-                        />
-                    </div>
-                )}
              
             </section>
 
@@ -286,29 +310,12 @@ const Home = () => {
                     <source src="/video/2.mp4" type="video/mp4"/>
                 </video>
 
-                {/* Top half of overlay at top of mid section */}
-                <div className="absolute top-0 left-0 w-full pointer-events-none z-30" style={{ height: '30vh' }}>
+                {/* Full overlay PNG showing both top and bottom parts */}
+                <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-30">
                     <img 
                         src="/images/overlay.png" 
-                        alt="Overlay Top" 
-                        className="w-full h-full"
-                        style={{
-                            objectFit: 'cover',
-                            objectPosition: 'top'
-                        }}
-                    />
-                </div>
-
-                {/* Bottom half of overlay at bottom of mid section */}
-                <div className="absolute bottom-0 left-0 w-full pointer-events-none z-30" style={{ height: '30vh' }}>
-                    <img 
-                        src="/images/overlay.png" 
-                        alt="Overlay Bottom" 
-                        className="w-full h-full"
-                        style={{
-                            objectFit: 'cover',
-                            objectPosition: 'bottom'
-                        }}
+                        alt="Overlay" 
+                        className="w-full h-full object-fill"
                     />
                 </div>
 
@@ -333,22 +340,9 @@ const Home = () => {
                     <img
                     src="/images/building.webp" 
                     alt="Building" 
-                    className="end-image absolute top-0 left-0 w-fit h-fit -z-10"
+                    className="end-image absolute top-0 left-0 w-full h-full object-cover -z-10"
                     style={{ transformOrigin: 'center center' }}
                     />
-
-                {/* Bottom half of overlay at top of end section */}
-                <div className="absolute top-0 left-0 w-full pointer-events-none z-30" style={{ height: '30vh' }}>
-                    <img 
-                        src="/images/overlay.png" 
-                        alt="Overlay Bottom" 
-                        className="w-full h-full"
-                        style={{
-                            objectFit: 'cover',
-                            objectPosition: 'bottom'
-                        }}
-                    />
-                </div>
 
                 {/* Logo and Text - Center (for intro animation) */}
                 <div className="end-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 opacity-0 flex flex-col items-center">
