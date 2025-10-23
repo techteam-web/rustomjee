@@ -3,25 +3,47 @@
 
 /* 1) Theme tokens */
 :root {
-  --brand-deep-blue: #1d2938;            /* Deep Blue */
-  --brand-deep-blue-ink: #141c27;        /* Darker ink for contrast */
-  --brand-deep-blue-tint: #314155;       /* Lighter tint for borders/hover */
+  --brand-deep-blue: #1d2938;            
+  --brand-deep-blue-ink: #141c27;        
+  --brand-deep-blue-tint: #314155;       
   --font-sans: 'Balgin', 'Balgin Extra Light', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-    
 }
 
 /* 2) Font loading (Balgin Extra Light) */
 @font-face {
   font-family: 'Balgin';
   src:
-   
     url('/fonts/balgin-extra-light.ttf') format('truetype');
   
   font-style: normal;
   font-display: swap;
 }
 
+/* 3) Hide scrollbar globally */
+body::-webkit-scrollbar {
+  display: none;
+}
 
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 
+/* 4) Scroll snap for cinematic sections */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
 
-
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+ 
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+  }
+}

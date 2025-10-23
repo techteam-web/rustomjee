@@ -1,72 +1,14 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+// Inventory.jsx
+import { useState, useRef, useCallback } from "react";
 import { data } from "../constants/data";
-
-// Modal Component
-const LayerModal = ({ layer, onClose }) => {
-  const modalRef = useRef(null);
-
-  // Close on click outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose]);
-
-  // Close on ESC key
-  useEffect(() => {
-    const handleEscape = (event) => {
-      if (event.key === 'Escape') onClose();
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
-
-  return (
-   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-  <div ref={modalRef} className="relative max-w-4xl w-full mx-4">
-    {/* Close Button - Positioned absolutely on top-right */}
-    <button 
-      onClick={onClose}
-      className="absolute -top-0 -right-0 z-10 bg-transparent hover:bg-gray-100 rounded-full p-2 shadow-lg transition-colors cursor-pointer"
-    >
-      <svg 
-        className="w-6 h-6 text-gray-700" 
-        fill="none" 
-        stroke="currentColor" 
-        viewBox="0 0 24 24"
-      >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          strokeWidth={2} 
-          d="M6 18L18 6M6 6l12 12" 
-        />
-      </svg>
-    </button>
-
-    {/* Image */}
-    <img 
-      src="/images/floorplan.jpeg" 
-      alt="Floor Plan"
-      className="w-full h-auto rounded-lg shadow-2xl"
-    />
-  </div>
-</div>
-
-  );
-};
+import FloorComparisonPanel from "../components/FloorComparisonPanel";
 
 export default function Inventory() {
   const [layers] = useState(data);
   const [selectedLayer, setSelectedLayer] = useState(null);
   const [hoveredLayer, setHoveredLayer] = useState(null);
-  const [modalLayer, setModalLayer] = useState(null); // New state for modal
+  const [showComparison, setShowComparison] = useState(false);
+  const [lockedFloor, setLockedFloor] = useState(null);
   const svgRef = useRef(null);
 
   const getClassColor = useCallback((layer) => {
@@ -80,7 +22,6 @@ export default function Inventory() {
       'cls-7': 'rgba(181, 209, 141, 0.60)',
       'cls-8': '#3b4b9f',
       'cls-9': 'rgba(204, 256, 252, 0.60)',
-      // R204 G256 B252
     };
     return classColors[layer.class] || '#d0aa2d';
   }, []);
@@ -103,20 +44,40 @@ export default function Inventory() {
     setHoveredLayer(null);
   }, []);
 
+  // ✅ UPDATED: Directly open comparison panel for highlighted floors
   const handleLayerClick = useCallback((layer) => {
-    // Check if layer has cls-1, cls-2, or cls-3
+    // Check if it's a highlighted floor (cls-1, cls-2, or cls-3)
     if (['cls-1', 'cls-2', 'cls-3'].includes(layer.class)) {
-      setModalLayer(layer); // Open modal
+      // Convert layer to floor format
+      const floor = {
+        id: layer.path_id,
+        d: layer.d,
+        info: {
+          bhk: layer.bhk || 'Duplex',
+          floorNumber: layer.floorNumber || 'XX',
+          price: layer.price || 'XX Cr',
+          area: layer.area || 'XXXX sq.ft',
+          availability: layer.availability !== false
+        }
+      };
+      
+      // Set as locked floor and open comparison
+      setLockedFloor(floor);
+      setShowComparison(true);
     }
+    
+    // Toggle selection for visual feedback
     setSelectedLayer(prev => prev === layer.path_id ? null : layer.path_id);
   }, []);
 
-  const closeModal = useCallback(() => {
-    setModalLayer(null);
+  const closeComparison = useCallback(() => {
+    setShowComparison(false);
+    setLockedFloor(null);
   }, []);
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-[#dedbd4]">
+      {/* Logo */}
       <div className="fixed top-4 right-10 z-40">
         <img 
           src="/images/logo.png" 
@@ -125,6 +86,7 @@ export default function Inventory() {
         />
       </div>
 
+      {/* Building SVG */}
       <div className="fixed inset-0 w-full h-full flex items-center justify-center">
         <svg
           ref={svgRef}
@@ -166,8 +128,15 @@ export default function Inventory() {
         </svg>
       </div>
 
-      {/* Render Modal */}
-      {modalLayer && <LayerModal layer={modalLayer} onClose={closeModal} />}
+      {/* Comparison Panel */}
+      {showComparison && (
+        <FloorComparisonPanel
+          show={showComparison}
+          onClose={closeComparison}
+          floors={data}
+          lockedFloor={lockedFloor}
+        />
+      )}
     </div>
   );
 }
