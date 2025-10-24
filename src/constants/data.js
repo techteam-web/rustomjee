@@ -30,50 +30,34 @@ export const data = [
 export const slidesData = [
   { 
     id: 21, 
-    src: '/images/3.6.jpg', 
-    category: 'exterior',
-    isPortrait: true,
-    heading: 'Panoramic Views',
-    text: 'Floor-to-ceiling windows offering breathtaking city skyline views. Every angle is a picture-perfect moment.',
-    subtext: 'Living above it all.'
+    src: '/images/3.6.1.jpg', 
+    category: 'exterior'
   },{ id: 18, src: '/images/3.2.jpg', category: 'exterior' }, 
   { id: 1, src: '/images/1.1.jpg', category: 'amenities' }, { 
     id: 8, 
-    src: '/images/1.7.jpg', 
+    src: '/images/1.7.1.jpg', 
     category: 'amenities',
-    isPortrait: true,
-    heading: 'Fitness & Wellness',
-    text: 'State-of-the-art fitness center equipped with modern equipment and dedicated spaces for yoga and meditation. Transform your lifestyle with premium wellness facilities.',
-    subtext: 'Available 24/7 with professional trainers on call.'
+    
   },{ id: 7, src: '/images/1.6.jpg', category: 'amenities' },{ id: 5, src: '/images/1.4.jpg', category: 'amenities' },
   { 
     id: 10, 
-    src: '/images/1.9.jpg', 
+    src: '/images/1.9.1.jpg', 
     category: 'amenities',
-    isPortrait: true,
-    heading: 'Resort-Style Living',
-    text: 'Indulge in luxury amenities including infinity pools, landscaped gardens, and entertainment zones. Experience vacation-like living every single day.',
-    subtext: 'Your personal resort, right at home.'
+  
   },{ id: 3, src: '/images/1.2.jpg', category: 'amenities'},{ id: 4, src: '/images/1.3.jpg', category: 'amenities' },{ id: 6, src: '/images/1.5.jpg', category: 'amenities' }, { id: 11, src: '/images/2.1.jpg', category: 'apartment' },
   { 
     id: 16, 
-    src: '/images/2.7.jpg', 
+    src: '/images/2.7.1.jpg', 
     category: 'apartment',
-    isPortrait: true,
-    heading: 'Bedroom Serenity',
-    text: 'Luxurious bedrooms with walk-in wardrobes and ensuite bathrooms. Wake up to stunning views and ultimate privacy.',
-    subtext: 'Your personal sanctuary of peace.'
+   
   },{ id: 12, src: '/images/2.2.jpg', category: 'apartment' },{ 
     id: 14, 
-    src: '/images/2.5.jpg', 
+    src: '/images/2.5.1.jpg', 
     category: 'apartment',
-    isPortrait: true,
-    heading: 'Modern Interiors',
-    text: 'Spacious apartments with contemporary design, premium finishes, and abundant natural light. Every corner reflects sophistication and comfort.',
-    subtext: 'Thoughtfully designed for modern families.'
+   
   },
  { id: 9, src: '/images/1.8.jpg', category: 'amenities' },{ id: 17, src: '/images/3.1.jpg', category: 'exterior' },
-  { id: 2, src: '/images/gym_d.png', revealImage: '/images/gym_n.png', category: 'amenities' },
+  { id: 2, revealImage: '/images/gym_d.png',src: '/images/gym_n.png', category: 'amenities' },
   
   
   
@@ -83,37 +67,28 @@ export const slidesData = [
   
  
   
-  { id: 13, src: '/images/2.3.jpg', revealImage: '/images/2.4.jpg', category: 'apartment' },
+  { id: 13, revealImage: '/images/2.3.jpg', src: '/images/2.4.jpg', category: 'apartment' },
   
   { 
     id: 15, 
-    src: '/images/2.6.jpg', 
+    src: '/images/2.6.1.jpg', 
     category: 'apartment',
-    isPortrait: true,
-    heading: 'Kitchen Perfection',
-    text: 'Chef-inspired kitchens with modular cabinets, granite countertops, and high-end appliances. Cooking becomes a delightful experience.',
-    subtext: 'Where culinary dreams come true.'
+   
   },
   
   
 
   { 
     id: 20, 
-    src: '/images/3.5.jpg', 
+    src: '/images/3.5.1.jpg', 
     category: 'exterior',
-    isPortrait: true,
-    heading: 'Grand Entrance',
-    text: 'Impressive entrance lobby with double-height ceilings, premium materials, and 24/7 concierge service. First impressions that last forever.',
-    subtext: 'Where luxury welcomes you home.'
+   
   },  { 
     id: 19, 
-    src: '/images/3.3.jpg',
-    revealImage: '/images/3.4.jpg', 
+    revealImage: '/images/3.3.1.jpg',
+    src: '/images/3.4.1.jpg', 
     category: 'exterior',
-    isPortrait: true,
-    heading: 'Iconic Architecture',
-    text: 'Contemporary design meets timeless elegance in our stunning facade. A landmark structure that redefines luxury living.',
-    subtext: 'Designed by award-winning architects.'
+   
   },
   
 ];

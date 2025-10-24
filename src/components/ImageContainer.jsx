@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 
-const CURSOR_SIZE = 120;
+const CURSOR_SIZE = 80
 const LERP_FACTOR = 0.1;
 
 export const ImageContainer = ({ baseImage, revealImage }) => {
@@ -29,14 +29,10 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
   // Detect mobile/tablet based on screen size
   useEffect(() => {
     const checkScreenSize = () => {
-      // Mobile and tablets are typically <= 1024px
       setIsMobileOrTablet(window.innerWidth <= 1024);
     };
 
-    // Check on mount
     checkScreenSize();
-
-    // Listen for window resize
     window.addEventListener('resize', checkScreenSize);
 
     return () => {
@@ -115,10 +111,51 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
     }
   };
 
+  // Create ripple effect starting from cursor edge
+  const createRipple = (e, currentCursorSize) => {
+    if (!containerRef.current) return;
+
+    const ripple = document.createElement('span');
+    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Calculate maximum distance to cover entire container
+    const maxDistance = Math.max(
+      Math.sqrt(Math.pow(rect.width, 2) + Math.pow(rect.height, 2))
+    );
+    
+    // Ripple starts from cursor radius and expands outward
+    const cursorRadius = currentCursorSize / 2;
+    const finalSize = maxDistance * 2;
+    
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+    
+    // Position the ripple centered on click point
+    ripple.style.width = ripple.style.height = `${finalSize}px`;
+    ripple.style.left = `${clickX - finalSize / 2}px`;
+    ripple.style.top = `${clickY - finalSize / 2}px`;
+    
+    // Set initial scale based on cursor size
+    const initialScale = (cursorRadius * 2) / finalSize;
+    ripple.style.setProperty('--initial-scale', initialScale);
+    
+    ripple.classList.add('ripple-effect');
+
+    containerRef.current.appendChild(ripple);
+
+    ripple.addEventListener('animationend', () => {
+      ripple.remove();
+    });
+  };
+
   const handleClick = (e) => {
     e.stopPropagation();
     
     if (isAnimating || isMobileOrTablet) return;
+
+    // Get current cursor size to start ripple from its edge
+    const currentCursorSize = animatedValues.current.size || CURSOR_SIZE;
+    createRipple(e, currentCursorSize);
 
     setIsAnimating(true);
 
@@ -227,7 +264,7 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
   return (
     <div
       ref={containerRef}
-      className="image-container-wrapper absolute top-0 left-0 w-full h-full cursor-none z-[2]"
+      className="image-container-wrapper absolute top-0 left-0 w-full h-full cursor-none z-[2] overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => !isAnimating && setIsHovering(true)}
       onMouseLeave={() => !isAnimating && setIsHovering(false)}
@@ -256,6 +293,25 @@ export const ImageContainer = ({ baseImage, revealImage }) => {
         style={{ willChange: 'transform, opacity, width, height' }}
         aria-hidden="true"
       />
+
+      <style jsx>{`
+        .ripple-effect {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.7);
+          transform: scale(var(--initial-scale, 0));
+          animation: ripple-animation 1.5s ease-out;
+          pointer-events: none;
+          z-index: 9999;
+        }
+
+        @keyframes ripple-animation {
+          to {
+            transform: scale(1);
+            opacity: 0;
+          }
+        }
+      `}</style>
     </div>
   );
 };

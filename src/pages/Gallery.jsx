@@ -432,7 +432,7 @@ export default function StorySlider({
       onTouchEnd={handleTouchEnd}
     >
       <div className='fixed top-2 left-2 z-50 flex justify-end items-end p-4'>
-        <a href="/"><img src="/images/logo.svg" alt="Rustomjee" className="h-12 w-auto"/></a>
+        <a href="/"><img src="/images/logo.png" alt="Rustomjee" className="h-12 w-auto"/></a>
       </div>
 
       <div className="slider absolute top-0 left-0 w-full h-full overflow-hidden">
