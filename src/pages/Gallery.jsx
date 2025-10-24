@@ -448,7 +448,7 @@ export default function StorySlider({
         ))}
 
         <div className='bottom-6 w-[90%] sm:w-[50%] px-4 sm:px-12 absolute left-1/2 -translate-x-1/2 z-50'>
-          <div className='grid grid-cols-3 gap-2 sm:gap-6 mb-4'>
+          {/* <div className='grid grid-cols-3 gap-2 sm:gap-6 mb-4'>
             <button 
               onClick={() => jumpToCategory('amenities')}
               className={`bg-transparent uppercase border-none cursor-pointer text-sm sm:text-xl text-white touch-manipulation ${currentCategory === 'amenities' ? 'font-bold' : ''}`}
@@ -467,10 +467,10 @@ export default function StorySlider({
             >
               Exterior
             </button>
-          </div>
+          </div> */}
 
           <div className='relative w-full h-1 bg-white/30 rounded-none overflow-hidden opacity-50'>
-            <div 
+            {/* <div 
               className='absolute top-0 h-full w-[2px] bg-white/60 z-10'
               style={{ left: '0%' }}
             />
@@ -481,7 +481,7 @@ export default function StorySlider({
             <div 
               className='absolute top-0 h-full w-[2px] bg-white/60 z-10'
               style={{ left: `${amenitiesWidth + apartmentWidth}%` }}
-            />
+            /> */}
             
             <div 
               className='h-full bg-white transition-all duration-300 ease-out rounded-none'

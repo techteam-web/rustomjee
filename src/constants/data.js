@@ -28,14 +28,16 @@ export const data = [
   { "layer_id": "Layer_24", "layer_name": "Layer 24", "class": "cls-2", "d": "m 2109.81,3170 -127.51,35 c 0,0 -17.1,4.85 -23.89,0.61 l -56.15,2.35 -24.65,22.3 -72,-4.5 -30.84,25.46 -164.87,32.23 -71.51,-1.73 v -7.83 c 0,0 -31.28,14.58 -65.98,10.81 l -295.81,-19.28 c 0,0 -30.4,-1.84 -28.77,-12.08 l -68.48,-4.5 -64.37,-85.7 -20.54,-3.33 19.89,6.59 -6.26,4.43 8.61,3.13 0.52,29.22 -6.78,9.39 0.26,22.7 -10.46,18.67 0.64,7.25 81.38,128.22 c 0,0 7.56,17.85 26.52,19.16 l 288.79,22.95 h 39.14 l 118.72,-28.68 61.57,3.65 494.48,-124.4 c 0,0 13.06,-3.25 11.67,-11.34 l -23.05,-10.17 -2.61,0.52 -13.57,-0.78 -0.52,-10.96 4.17,-4.7 -4.7,-2.09 0.26,-63.91 26.71,-8.67 z", "path_id": "path27" } 
 ];
 export const slidesData = [
-  { id: 1, src: '/images/1.1.jpg', category: 'amenities' },
-  { id: 2, src: '/images/gym_d.png', revealImage: '/images/gym_n.png', category: 'amenities' },
-  { id: 3, src: '/images/1.2.jpg', category: 'amenities'},
-  { id: 4, src: '/images/1.3.jpg', category: 'amenities' },
-  { id: 5, src: '/images/1.4.jpg', category: 'amenities' },
-  { id: 6, src: '/images/1.5.jpg', category: 'amenities' },
-  { id: 7, src: '/images/1.6.jpg', category: 'amenities' },
   { 
+    id: 21, 
+    src: '/images/3.6.jpg', 
+    category: 'exterior',
+    isPortrait: true,
+    heading: 'Panoramic Views',
+    text: 'Floor-to-ceiling windows offering breathtaking city skyline views. Every angle is a picture-perfect moment.',
+    subtext: 'Living above it all.'
+  },{ id: 18, src: '/images/3.2.jpg', category: 'exterior' }, 
+  { id: 1, src: '/images/1.1.jpg', category: 'amenities' }, { 
     id: 8, 
     src: '/images/1.7.jpg', 
     category: 'amenities',
@@ -43,8 +45,7 @@ export const slidesData = [
     heading: 'Fitness & Wellness',
     text: 'State-of-the-art fitness center equipped with modern equipment and dedicated spaces for yoga and meditation. Transform your lifestyle with premium wellness facilities.',
     subtext: 'Available 24/7 with professional trainers on call.'
-  },
-  { id: 9, src: '/images/1.8.jpg', category: 'amenities' },
+  },{ id: 7, src: '/images/1.6.jpg', category: 'amenities' },{ id: 5, src: '/images/1.4.jpg', category: 'amenities' },
   { 
     id: 10, 
     src: '/images/1.9.jpg', 
@@ -53,11 +54,16 @@ export const slidesData = [
     heading: 'Resort-Style Living',
     text: 'Indulge in luxury amenities including infinity pools, landscaped gardens, and entertainment zones. Experience vacation-like living every single day.',
     subtext: 'Your personal resort, right at home.'
-  },
-  { id: 11, src: '/images/2.1.jpg', category: 'apartment' },
-  { id: 12, src: '/images/2.2.jpg', category: 'apartment' },
-  { id: 13, src: '/images/2.3.jpg', revealImage: '/images/2.4.jpg', category: 'apartment' },
+  },{ id: 3, src: '/images/1.2.jpg', category: 'amenities'},{ id: 4, src: '/images/1.3.jpg', category: 'amenities' },{ id: 6, src: '/images/1.5.jpg', category: 'amenities' }, { id: 11, src: '/images/2.1.jpg', category: 'apartment' },
   { 
+    id: 16, 
+    src: '/images/2.7.jpg', 
+    category: 'apartment',
+    isPortrait: true,
+    heading: 'Bedroom Serenity',
+    text: 'Luxurious bedrooms with walk-in wardrobes and ensuite bathrooms. Wake up to stunning views and ultimate privacy.',
+    subtext: 'Your personal sanctuary of peace.'
+  },{ id: 12, src: '/images/2.2.jpg', category: 'apartment' },{ 
     id: 14, 
     src: '/images/2.5.jpg', 
     category: 'apartment',
@@ -66,6 +72,19 @@ export const slidesData = [
     text: 'Spacious apartments with contemporary design, premium finishes, and abundant natural light. Every corner reflects sophistication and comfort.',
     subtext: 'Thoughtfully designed for modern families.'
   },
+ { id: 9, src: '/images/1.8.jpg', category: 'amenities' },{ id: 17, src: '/images/3.1.jpg', category: 'exterior' },
+  { id: 2, src: '/images/gym_d.png', revealImage: '/images/gym_n.png', category: 'amenities' },
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  { id: 13, src: '/images/2.3.jpg', revealImage: '/images/2.4.jpg', category: 'apartment' },
+  
   { 
     id: 15, 
     src: '/images/2.6.jpg', 
@@ -75,18 +94,18 @@ export const slidesData = [
     text: 'Chef-inspired kitchens with modular cabinets, granite countertops, and high-end appliances. Cooking becomes a delightful experience.',
     subtext: 'Where culinary dreams come true.'
   },
+  
+  
+
   { 
-    id: 16, 
-    src: '/images/2.7.jpg', 
-    category: 'apartment',
+    id: 20, 
+    src: '/images/3.5.jpg', 
+    category: 'exterior',
     isPortrait: true,
-    heading: 'Bedroom Serenity',
-    text: 'Luxurious bedrooms with walk-in wardrobes and ensuite bathrooms. Wake up to stunning views and ultimate privacy.',
-    subtext: 'Your personal sanctuary of peace.'
-  },
-  { id: 17, src: '/images/3.1.jpg', category: 'exterior' },
-  { id: 18, src: '/images/3.2.jpg', category: 'exterior' },
-  { 
+    heading: 'Grand Entrance',
+    text: 'Impressive entrance lobby with double-height ceilings, premium materials, and 24/7 concierge service. First impressions that last forever.',
+    subtext: 'Where luxury welcomes you home.'
+  },  { 
     id: 19, 
     src: '/images/3.3.jpg',
     revealImage: '/images/3.4.jpg', 
@@ -96,22 +115,5 @@ export const slidesData = [
     text: 'Contemporary design meets timeless elegance in our stunning facade. A landmark structure that redefines luxury living.',
     subtext: 'Designed by award-winning architects.'
   },
-  { 
-    id: 20, 
-    src: '/images/3.5.jpg', 
-    category: 'exterior',
-    isPortrait: true,
-    heading: 'Grand Entrance',
-    text: 'Impressive entrance lobby with double-height ceilings, premium materials, and 24/7 concierge service. First impressions that last forever.',
-    subtext: 'Where luxury welcomes you home.'
-  },
-  { 
-    id: 21, 
-    src: '/images/3.6.jpg', 
-    category: 'exterior',
-    isPortrait: true,
-    heading: 'Panoramic Views',
-    text: 'Floor-to-ceiling windows offering breathtaking city skyline views. Every angle is a picture-perfect moment.',
-    subtext: 'Living above it all.'
-  },
+  
 ];
